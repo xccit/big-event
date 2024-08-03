@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.xccit.event.mapper.IUserMapper">
+    <!--用户注册-->
+    <insert id="register">
+        INSERT INTO user(username,password,nickname,create_time,update_time)
+        VALUES(#{username},#{password},#{username},now(),now())
+    </insert>
+    <!--根据用户名查询用户-->
+    <select id="selectByUsername" resultType="user">
+        SELECT id,username,password,nickname,user_pic,email,create_time,update_time FROM user WHERE username = #{username}
+    </select>
+</mapper>
