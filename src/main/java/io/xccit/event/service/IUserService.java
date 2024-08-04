@@ -30,4 +30,10 @@ public interface IUserService {
      * @return
      */
     User selectInfo(String username);
+
+    /**
+     * 修改用户信息
+     * @param user
+     */
+    void update(User user);
 }

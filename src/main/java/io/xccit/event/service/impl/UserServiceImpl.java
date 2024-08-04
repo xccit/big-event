@@ -70,4 +70,14 @@ public class UserServiceImpl implements IUserService {
     public User selectInfo(String username) {
         return userMapper.selectByUsername(username);
     }
+
+    /**
+     * 修改用户信息
+     *
+     * @param user
+     */
+    @Override
+    public void update(User user) {
+        userMapper.update(user);
+    }
 }

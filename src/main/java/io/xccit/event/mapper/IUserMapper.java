@@ -22,4 +22,10 @@ public interface IUserMapper {
      * @param password 密码
      */
     void register(String username, String password);
+
+    /**
+     * 修改用户信息
+     * @param user 用户
+     */
+    void update(User user);
 }

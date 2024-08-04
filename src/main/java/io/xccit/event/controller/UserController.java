@@ -76,4 +76,17 @@ public class UserController {
         User user = userService.selectInfo(username);
         return AjaxResult.success(AjaxHttpStatus.SUCCESS,user);
     }
+
+    /**
+     * 修改用户信息
+     * @param user
+     * @return
+     */
+    @Operation(summary = "修改用户信息")
+    @PutMapping
+    public AjaxResult update(@RequestBody @Validated User user){
+        System.out.println(user);
+        userService.update(user);
+        return AjaxResult.success(AjaxHttpStatus.SUCCESS);
+    }
 }

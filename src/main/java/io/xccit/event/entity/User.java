@@ -7,9 +7,7 @@ import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import org.hibernate.validator.constraints.Length;
 
 /**
@@ -27,49 +25,41 @@ public class User implements Serializable {
     /**
     * 用户名
     */
-    @NotBlank(message="[用户名]不能为空")
-    @Size(max= 20,message="编码长度不能超过20")
+    @Pattern(regexp = "^[a-zA-Z0-9_-]{5,16}$",message = "用户名格式不正确")
     @ApiModelProperty("用户名")
-    @Length(max= 20,message="编码长度不能超过20")
     private String username;
     /**
     * 密码
     */
-    @Size(max= 32,message="编码长度不能超过32")
     @ApiModelProperty("密码")
-    @Length(max= 32,message="编码长度不能超过32")
     private String password;
     /**
     * 昵称
     */
-    @Size(max= 10,message="编码长度不能超过10")
+    @Pattern(regexp = "^[a-zA-Z0-9_-]{5,16}$",message = "昵称格式不正确")
     @ApiModelProperty("昵称")
-    @Length(max= 10,message="编码长度不能超过10")
     private String nickname;
     /**
     * 邮箱
     */
-    @Size(max= 128,message="编码长度不能超过128")
+    @Email(message="邮箱格式不正确")
     @ApiModelProperty("邮箱")
-    @Length(max= 128,message="编码长度不能超过128")
     private String email;
     /**
     * 头像
     */
-    @Size(max= 128,message="编码长度不能超过128")
     @ApiModelProperty("头像")
-    @Length(max= 128,message="编码长度不能超过128")
     private String userPic;
     /**
     * 创建时间
     */
-    @NotNull(message="[创建时间]不能为空")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     @ApiModelProperty("创建时间")
     private Date createTime;
     /**
     * 修改时间
     */
-    @NotNull(message="[修改时间]不能为空")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     @ApiModelProperty("修改时间")
     private Date updateTime;
 
@@ -177,7 +167,6 @@ public class User implements Serializable {
     /**
     * 创建时间
     */
-    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
     public Date getCreateTime(){
     return this.createTime;
     }
@@ -185,7 +174,6 @@ public class User implements Serializable {
     /**
     * 修改时间
     */
-    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
     public Date getUpdateTime(){
     return this.updateTime;
     }

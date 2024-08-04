@@ -8,6 +8,25 @@
         INSERT INTO user(username,password,nickname,create_time,update_time)
         VALUES(#{username},#{password},#{username},now(),now())
     </insert>
+    <!--用户资料修改-->
+    <update id="update">
+        UPDATE user
+        <set>
+            <if test="nickname != null">
+                nickname = #{nickname},
+            </if>
+            <if test="username != null">
+                username = #{username},
+            </if>
+            <if test="email != null">
+                email = #{email},
+            </if>
+            update_time = now()
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
     <!--根据用户名查询用户-->
     <select id="selectByUsername" resultType="user">
         SELECT id,username,password,nickname,user_pic,email,create_time,update_time FROM user WHERE username = #{username}
