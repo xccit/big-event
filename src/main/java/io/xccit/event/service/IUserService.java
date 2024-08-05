@@ -1,6 +1,7 @@
 package io.xccit.event.service;
 
 import io.xccit.event.entity.User;
+import io.xccit.event.entity.dto.UserPasswordDTO;
 
 /**
  * @author CH_ywx
@@ -36,4 +37,16 @@ public interface IUserService {
      * @param user
      */
     void update(User user);
+
+    /**
+     * 修改用户头像
+     * @param avatarUrl
+     */
+    void updateAvatar(String avatarUrl);
+
+    /**
+     * 修改用户密码
+     * @param userPasswordDTO
+     */
+    void updatePassword(UserPasswordDTO userPasswordDTO);
 }

@@ -7,12 +7,14 @@ import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.xccit.event.entity.User;
+import io.xccit.event.entity.dto.UserPasswordDTO;
 import io.xccit.event.resut.AjaxHttpStatus;
 import io.xccit.event.resut.AjaxResult;
 import io.xccit.event.service.IUserService;
 import io.xccit.event.utils.JwtUtil;
 import io.xccit.event.utils.ThreadLocalUserUtil;
 import jakarta.validation.constraints.Pattern;
+import org.hibernate.validator.constraints.URL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -85,8 +87,34 @@ public class UserController {
     @Operation(summary = "修改用户信息")
     @PutMapping
     public AjaxResult update(@RequestBody @Validated User user){
-        System.out.println(user);
         userService.update(user);
+        return AjaxResult.success(AjaxHttpStatus.SUCCESS);
+    }
+
+    /**
+     * 修改用户头像
+     * @param avatarUrl
+     * @return
+     */
+    @Operation(summary = "修改用户头像")
+    @Parameters({
+            @Parameter(name = "avatarUrl",description = "头像地址",required = true,in = ParameterIn.QUERY)
+    })
+    @PatchMapping(value = "/updateAvatar")
+    public AjaxResult updateAvatar(@RequestParam(value = "avatarUrl") @URL String avatarUrl){
+        userService.updateAvatar(avatarUrl);
+        return AjaxResult.success(AjaxHttpStatus.SUCCESS);
+    }
+
+    /**
+     * 修改用户密码
+     * @param userPasswordDTO
+     * @return
+     */
+    @Operation(summary = "修改用户密码")
+    @PatchMapping(value = "/updatePwd")
+    public AjaxResult updatePassword(@RequestBody @Validated UserPasswordDTO userPasswordDTO){
+        userService.updatePassword(userPasswordDTO);
         return AjaxResult.success(AjaxHttpStatus.SUCCESS);
     }
 }

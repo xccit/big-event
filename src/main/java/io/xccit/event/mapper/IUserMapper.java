@@ -1,6 +1,8 @@
 package io.xccit.event.mapper;
 
 import io.xccit.event.entity.User;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 
 /**
  * @author CH_ywx
@@ -28,4 +30,18 @@ public interface IUserMapper {
      * @param user 用户
      */
     void update(User user);
+
+    /**
+     * 修改用户头像
+     * @param avatarUrl
+     */
+    @Update("UPDATE user SET user_pic = #{avatarUrl},update_time = now() WHERE id = #{id}")
+    void updateAvatar(String avatarUrl,Integer id);
+
+    /**
+     * 修改用户密码
+     * @param password
+     */
+    @Update("UPDATE user SET password = #{password},update_time = now() WHERE id = #{id}")
+    void updatePassword(@Param("password") String password, Integer id);
 }

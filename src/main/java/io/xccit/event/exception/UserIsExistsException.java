@@ -1,5 +1,7 @@
 package io.xccit.event.exception;
 
+import io.xccit.event.resut.AjaxHttpStatus;
+
 /**
  * @author CH_ywx
  * @version 1.0
@@ -13,5 +15,9 @@ public class UserIsExistsException extends RuntimeException{
 
     public UserIsExistsException(String message) {
         super(message);
+    }
+
+    public UserIsExistsException(AjaxHttpStatus status) {
+        super(status.getMessage());
     }
 }

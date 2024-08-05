@@ -4,4 +4,44 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="io.xccit.event.mapper.ICategoryMapper">
 
+    <sql id="base_column">
+        id,category_alias,category_name,create_time,create_user,update_time
+    </sql>
+
+    <!--插入分类-->
+    <insert id="insert" useGeneratedKeys="true">
+        INSERT INTO category(category_alias,category_name,create_time,create_user,update_time)
+        VALUES (#{categoryAlias},#{categoryName},#{createTime},#{createUser},#{updateTime})
+    </insert>
+    <!--修改分类-->
+    <update id="update">
+        UPDATE category
+        <set>
+            <if test="categoryAlias != null">
+                category_alias = #{categoryAlias},
+            </if>
+            <if test="categoryName != null">
+                category_name = #{categoryName},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="createUser != null">
+                create_user = #{createUser},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+    <!--查询当前用户创建的分类-->
+    <select id="list" resultType="io.xccit.event.entity.Category">
+        SELECT
+            <include refid="base_column"/>
+        FROM category WHERE create_user = #{id}
+    </select>
+    <!--查询分类详情-->
+    <select id="selectById" resultType="io.xccit.event.entity.Category">
+        SELECT
+            <include refid="base_column"/>
+        FROM category WHERE id = #{id}
+    </select>
 </mapper>

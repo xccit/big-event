@@ -2,6 +2,9 @@ package io.xccit.event.service.impl;
 
 import com.auth0.jwt.JWT;
 import io.xccit.event.entity.User;
+import io.xccit.event.entity.dto.UserPasswordDTO;
+import io.xccit.event.exception.ConfirmPasswordException;
+import io.xccit.event.exception.OldPasswordException;
 import io.xccit.event.exception.UserIsExistsException;
 import io.xccit.event.exception.UserLoginException;
 import io.xccit.event.mapper.IUserMapper;
@@ -9,8 +12,11 @@ import io.xccit.event.resut.AjaxHttpStatus;
 import io.xccit.event.service.IUserService;
 import io.xccit.event.utils.JwtUtil;
 import io.xccit.event.utils.MD5Util;
+import io.xccit.event.utils.ThreadLocalUserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 /**
  * @author CH_ywx
@@ -79,5 +85,42 @@ public class UserServiceImpl implements IUserService {
     @Override
     public void update(User user) {
         userMapper.update(user);
+    }
+
+    /**
+     * 修改用户头像
+     *
+     * @param avatarUrl
+     */
+    @Override
+    public void updateAvatar(String avatarUrl) {
+        Map<String,Object> user = ThreadLocalUserUtil.get();
+        Integer id = (Integer) user.get("id");
+        userMapper.updateAvatar(avatarUrl,id);
+    }
+
+    /**
+     * 修改用户密码
+     *
+     * @param userPasswordDTO
+     */
+    @Override
+    public void updatePassword(UserPasswordDTO userPasswordDTO) {
+        String oldPwd = userPasswordDTO.getOldPwd();
+        String newPwd = userPasswordDTO.getNewPwd();
+        String rePwd = userPasswordDTO.getRePwd();
+        Map<String,Object> user = ThreadLocalUserUtil.get();
+        String username = (String) user.get("username");
+        User selectedUser = userMapper.selectByUsername(username);
+        if (selectedUser == null){
+            throw new UserIsExistsException(AjaxHttpStatus.SERVER_ERROR);
+        }
+        if (!selectedUser.getPassword().equals(MD5Util.getMD5String(oldPwd))) {
+            throw new OldPasswordException(AjaxHttpStatus.OLD_PASSWORD_ERROR);
+        }
+        if (!newPwd.equals(rePwd)) {
+            throw new ConfirmPasswordException(AjaxHttpStatus.CONFIRM_PASSWORD_ERROR);
+        }
+        userMapper.updatePassword(MD5Util.getMD5String(newPwd),selectedUser.getId());
     }
 }
