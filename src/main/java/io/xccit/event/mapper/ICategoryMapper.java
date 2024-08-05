@@ -1,6 +1,7 @@
 package io.xccit.event.mapper;
 
 import io.xccit.event.entity.Category;
+import org.apache.ibatis.annotations.Delete;
 
 import java.util.List;
 
@@ -37,4 +38,11 @@ public interface ICategoryMapper {
      * @param category
      */
     void update(Category category);
+
+    /**
+     * 删除分类
+     * @param id
+     */
+    @Delete("DELETE FROM category WHERE id = #{id}")
+    void deleteById(Integer id);
 }

@@ -34,9 +34,21 @@ springdoc:
     - group: '分类信息'
       paths-to-match: '/category/**'
       packages-to-scan: io.xccit.event.controller
+    - group: '文件上传'
+      paths-to-match: '/file/**'
+      packages-to-scan: io.xccit.event.controller
 # knife4j的增强配置，不需要增强可以不配
 knife4j:
   enable: true
   setting:
     language: zh_cn
+
+
+aliyun:
+  oss:
+    endpoint: oss-cn-beijing.aliyuncs.com
+    accessKeyId: Your AccessKeyId
+    accessKeySecret: Your AccessKeySecret
+    bucketName: Your BucketName
+
 

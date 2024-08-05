@@ -78,4 +78,19 @@ public class CategoryController {
         categoryService.update(category);
         return AjaxResult.success(AjaxHttpStatus.SUCCESS);
     }
+
+    /**
+     * 删除分类
+     * @param id
+     * @return
+     */
+    @Operation(summary = "删除分类")
+    @Parameters({
+            @Parameter(name ="id",description = "分类ID",required = true,in = ParameterIn.PATH)
+    })
+    @DeleteMapping(value = "/{id}")
+    public AjaxResult delete(@PathVariable Integer id){
+        categoryService.delete(id);
+        return AjaxResult.success(AjaxHttpStatus.SUCCESS);
+    }
 }

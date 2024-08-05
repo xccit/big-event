@@ -3,13 +3,18 @@ package io.xccit.event.entity;
 
 import java.io.Serializable;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
+import io.xccit.event.anno.State;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import jakarta.validation.groups.Default;
 import org.hibernate.validator.constraints.Length;
 
 /**
@@ -18,10 +23,13 @@ import org.hibernate.validator.constraints.Length;
 */
 public class Article implements Serializable {
 
+    public interface Insert extends Default {}
+    public interface Update extends Default {}
+
     /**
     * ID
     */
-    @NotNull(message="[ID]不能为空")
+    @NotNull(message="[ID]不能为空",groups = {Update.class})
     @ApiModelProperty("ID")
     private Integer id;
     /**
@@ -38,7 +46,7 @@ public class Article implements Serializable {
     @NotBlank(message="[文章内容]不能为空")
     @Size(max= 10000,message="编码长度不能超过10000")
     @ApiModelProperty("文章内容")
-    @Length(max= 10000,message="编码长度不能超过10,000")
+    @Length(max= 10000,message="编码长度不能超过10000")
     private String content;
     /**
     * 文章封面
@@ -51,94 +59,93 @@ public class Article implements Serializable {
     /**
     * 文章状态: 只能是[已发布] 或者 [草稿]
     */
-    @Size(max= 3,message="编码长度不能超过3")
+    @State
     @ApiModelProperty("文章状态: 只能是[已发布] 或者 [草稿]")
-    @Length(max= 3,message="编码长度不能超过3")
     private String state;
     /**
     * 文章分类ID
     */
+    @NotNull(message="[文章分类ID]不能为空")
     @ApiModelProperty("文章分类ID")
     private Integer categoryId;
     /**
     * 创建人ID
     */
-    @NotNull(message="[创建人ID]不能为空")
     @ApiModelProperty("创建人ID")
     private Integer createUser;
     /**
     * 创建时间
     */
-    @NotNull(message="[创建时间]不能为空")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     @ApiModelProperty("创建时间")
-    private Date createTime;
+    private LocalDateTime createTime;
     /**
     * 修改时间
     */
-    @NotNull(message="[修改时间]不能为空")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     @ApiModelProperty("修改时间")
-    private Date updateTime;
+    private LocalDateTime updateTime;
 
     /**
     * ID
     */
-    private void setId(Integer id){
+    public void setId(Integer id){
     this.id = id;
     }
 
     /**
     * 文章标题
     */
-    private void setTitle(String title){
+    public void setTitle(String title){
     this.title = title;
     }
 
     /**
     * 文章内容
     */
-    private void setContent(String content){
+    public void setContent(String content){
     this.content = content;
     }
 
     /**
     * 文章封面
     */
-    private void setCoverImg(String coverImg){
+    public void setCoverImg(String coverImg){
     this.coverImg = coverImg;
     }
 
     /**
     * 文章状态: 只能是[已发布] 或者 [草稿]
     */
-    private void setState(String state){
+    public void setState(String state){
     this.state = state;
     }
 
     /**
     * 文章分类ID
     */
-    private void setCategoryId(Integer categoryId){
+    public void setCategoryId(Integer categoryId){
     this.categoryId = categoryId;
     }
 
     /**
     * 创建人ID
     */
-    private void setCreateUser(Integer createUser){
+    public void setCreateUser(Integer createUser){
     this.createUser = createUser;
     }
 
     /**
     * 创建时间
     */
-    private void setCreateTime(Date createTime){
+    public void setCreateTime(LocalDateTime createTime){
     this.createTime = createTime;
     }
 
     /**
     * 修改时间
     */
-    private void setUpdateTime(Date updateTime){
+    public void setUpdateTime(LocalDateTime updateTime){
     this.updateTime = updateTime;
     }
 
@@ -146,63 +153,63 @@ public class Article implements Serializable {
     /**
     * ID
     */
-    private Integer getId(){
+    public Integer getId(){
     return this.id;
     }
 
     /**
     * 文章标题
     */
-    private String getTitle(){
+    public String getTitle(){
     return this.title;
     }
 
     /**
     * 文章内容
     */
-    private String getContent(){
+    public String getContent(){
     return this.content;
     }
 
     /**
     * 文章封面
     */
-    private String getCoverImg(){
+    public String getCoverImg(){
     return this.coverImg;
     }
 
     /**
     * 文章状态: 只能是[已发布] 或者 [草稿]
     */
-    private String getState(){
+    public String getState(){
     return this.state;
     }
 
     /**
     * 文章分类ID
     */
-    private Integer getCategoryId(){
+    public Integer getCategoryId(){
     return this.categoryId;
     }
 
     /**
     * 创建人ID
     */
-    private Integer getCreateUser(){
+    public Integer getCreateUser(){
     return this.createUser;
     }
 
     /**
     * 创建时间
     */
-    private Date getCreateTime(){
+    public LocalDateTime getCreateTime(){
     return this.createTime;
     }
 
     /**
     * 修改时间
     */
-    private Date getUpdateTime(){
+    public LocalDateTime getUpdateTime(){
     return this.updateTime;
     }
 

@@ -82,4 +82,14 @@ public class CategoryServiceImpl implements ICategoryService {
         category.setCreateUser((Integer) getCurrentUser().get("id"));
         categoryMapper.update(category);
     }
+
+    /**
+     * 删除分类
+     *
+     * @param id
+     */
+    @Override
+    public void delete(Integer id) {
+        categoryMapper.deleteById(id);
+    }
 }
