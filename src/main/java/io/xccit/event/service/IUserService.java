@@ -2,6 +2,7 @@ package io.xccit.event.service;
 
 import io.xccit.event.entity.User;
 import io.xccit.event.entity.dto.UserPasswordDTO;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * @author CH_ywx
@@ -48,5 +49,11 @@ public interface IUserService {
      * 修改用户密码
      * @param userPasswordDTO
      */
-    void updatePassword(UserPasswordDTO userPasswordDTO);
+    void updatePassword(UserPasswordDTO userPasswordDTO,HttpServletRequest request);
+
+    /**
+     * 用户退出
+     * @param request
+     */
+    void logout(HttpServletRequest request);
 }

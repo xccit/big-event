@@ -30,7 +30,7 @@ public class JwtUtil {
         claims.put("username", user.getUsername());
         return JWT.create()
                 .withClaim("user",claims)
-                .withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
+                .withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
                 .sign(Algorithm.HMAC256(SECRET));
     }
 

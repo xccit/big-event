@@ -13,6 +13,7 @@ import io.xccit.event.resut.AjaxResult;
 import io.xccit.event.service.IUserService;
 import io.xccit.event.utils.JwtUtil;
 import io.xccit.event.utils.ThreadLocalUserUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -113,8 +114,15 @@ public class UserController {
      */
     @Operation(summary = "修改用户密码")
     @PatchMapping(value = "/updatePwd")
-    public AjaxResult updatePassword(@RequestBody @Validated UserPasswordDTO userPasswordDTO){
-        userService.updatePassword(userPasswordDTO);
+    public AjaxResult updatePassword(@RequestBody @Validated UserPasswordDTO userPasswordDTO,HttpServletRequest request){
+        userService.updatePassword(userPasswordDTO,request);
+        return AjaxResult.success(AjaxHttpStatus.SUCCESS);
+    }
+
+    @Operation(summary = "用户退出")
+    @PostMapping(value = "/logout")
+    public AjaxResult logout(HttpServletRequest request){
+        userService.logout(request);
         return AjaxResult.success(AjaxHttpStatus.SUCCESS);
     }
 }

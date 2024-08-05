@@ -10,6 +10,7 @@ public enum AjaxHttpStatus {
     SUCCESS(200,"操作成功"),
     FAIL(500,"操作失败"),
     UNAUTHORIZED(401,"未授权"),
+    NO_LOGIN_FAIL(401,"登录已过期"),
     FORBIDDEN(403,"禁止访问"),
     NOT_FOUND(404,"未找到"),
     SERVER_ERROR(500,"服务器错误"),
