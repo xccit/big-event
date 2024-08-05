@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiModelProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import jakarta.validation.groups.Default;
 import org.hibernate.validator.constraints.Length;
 
 /**
@@ -19,8 +20,8 @@ import org.hibernate.validator.constraints.Length;
 */
 public class Category implements Serializable {
 
-    public interface Insert {}
-    public interface Update {}
+    public interface Insert extends Default {}
+    public interface Update extends Default{}
 
     /**
     * ID
@@ -31,7 +32,7 @@ public class Category implements Serializable {
     /**
     * 分类名称
     */
-    @NotBlank(message="[分类名称]不能为空",groups = {Insert.class, Update.class})
+    @NotBlank(message="[分类名称]不能为空")
     @Size(max= 32,message="编码长度不能超过32")
     @ApiModelProperty("分类名称")
     @Length(max= 32,message="编码长度不能超过32")
@@ -39,7 +40,7 @@ public class Category implements Serializable {
     /**
     * 分类别名
     */
-    @NotBlank(message="[分类别名]不能为空",groups = {Insert.class, Update.class})
+    @NotBlank(message="[分类别名]不能为空")
     @Size(max= 32,message="编码长度不能超过32")
     @ApiModelProperty("分类别名")
     @Length(max= 32,message="编码长度不能超过32")
