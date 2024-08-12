@@ -2,7 +2,11 @@
 import { User, Lock } from '@element-plus/icons-vue'
 import { ref } from 'vue'
 import {register,login} from "@/api/user/user.js";
+import {useRouter} from 'vue-router'
 import {ElMessage} from "element-plus";
+
+//路由函数
+const router = useRouter()
 //控制注册与登录表单的显示， 默认显示登录
 const isRegister = ref(false)
 //注册表单数据
@@ -39,10 +43,10 @@ const registerRules = {
 //注册函数
 const submitRegister = () => {
   register(registerParams.value).then(response=>{
-    // ElMessage.success(response.message)
+    //跳转到登录
     isRegister.value = false
   }).catch(response=>{
-    // ElMessage.error(response.message)
+
   })
 }
 
@@ -50,10 +54,10 @@ const submitRegister = () => {
 const submitLogin = ()=>{
   login(registerParams.value)
       .then(response=>{
-        // ElMessage.success(response.message)
+        router.push('/main')
       })
       .catch(response=>{
-        // ElMessage.error(response.message)
+
       })
 }
 //清空数据模型

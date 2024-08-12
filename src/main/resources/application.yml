@@ -45,7 +45,6 @@ knife4j:
   enable: true
   setting:
     language: zh_cn
-
 #阿里云OSS配置,请先配置再运行
 #aliyun:
 #  oss:
