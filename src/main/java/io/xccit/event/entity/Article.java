@@ -21,6 +21,7 @@ import org.hibernate.validator.constraints.Length;
 * 
 * @TableName article
 */
+
 public class Article implements Serializable {
 
     public interface Insert extends Default {}
@@ -211,6 +212,21 @@ public class Article implements Serializable {
     */
     public LocalDateTime getUpdateTime(){
     return this.updateTime;
+    }
+
+    public Article() {
+    }
+
+    public Article(Integer id, String title, String content, String coverImg, String state, Integer categoryId, Integer createUser, LocalDateTime createTime, LocalDateTime updateTime) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.coverImg = coverImg;
+        this.state = state;
+        this.categoryId = categoryId;
+        this.createUser = createUser;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
     }
 
     @Override
