@@ -1,18 +1,17 @@
 import {createRouter,createMemoryHistory} from 'vue-router'
 
 import Main from "@/views/Main.vue";
-import Login from "@/views/Login.vue";
 import Category from "@/views/category/Category.vue";
 import Article from "@/views/article/Article.vue";
 import UserAvatar from "@/views/user/UserAvatar.vue";
 import UserInfo from "@/views/user/UserInfo.vue";
 import UserRestPassword from "@/views/user/UserRestPassword.vue";
+import Login from "@/views/Login.vue";
 
 const routes = [
-    {path: '/',component: Login},
     {path:'/login',component: Login},
     {
-        path:'/main',
+        path:'/',
         component: Main,
         redirect: '/article',
         children:[

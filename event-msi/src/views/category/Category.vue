@@ -1,32 +1,23 @@
 <script setup>
 import {
   Edit,
-  Delete
+  Delete, Clock
 } from '@element-plus/icons-vue'
-import { ref } from 'vue'
-const categorys = ref([
-  {
-    "id": 3,
-    "categoryName": "美食",
-    "categoryAlias": "my",
-    "createTime": "2023-09-02 12:06:59",
-    "updateTime": "2023-09-02 12:06:59"
-  },
-  {
-    "id": 4,
-    "categoryName": "娱乐",
-    "categoryAlias": "yl",
-    "createTime": "2023-09-02 12:08:16",
-    "updateTime": "2023-09-02 12:08:16"
-  },
-  {
-    "id": 5,
-    "categoryName": "军事",
-    "categoryAlias": "js",
-    "createTime": "2023-09-02 12:08:33",
-    "updateTime": "2023-09-02 12:08:33"
-  }
-])
+import {list,insert,update,remove,detail} from '@/api/category/category.js'
+import {onMounted, ref} from 'vue'
+import {ElMessage} from "element-plus";
+const categorys = ref([])
+onMounted( ()=>{
+  getCategoryList()
+})
+//列表渲染
+const getCategoryList = ()=>{
+  list().then(response=>{
+    ElMessage.success("文章分类获取成功")
+    categorys.value = response.data
+  }).catch(response=>{
+  })
+}
 </script>
 <template>
   <el-card class="page-container">
@@ -42,6 +33,11 @@ const categorys = ref([
       <el-table-column label="序号" width="100" type="index"> </el-table-column>
       <el-table-column label="分类名称" prop="categoryName"></el-table-column>
       <el-table-column label="分类别名" prop="categoryAlias"></el-table-column>
+      <el-table-column label="创建时间" prop="createTime">
+        <template #default="scope">
+          <el-tag type="primary"><span><el-icon><Clock /></el-icon></span>{{scope.row.createTime}}</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" width="100">
         <template #default="{ row }">
           <el-button :icon="Edit" circle plain type="primary" ></el-button>

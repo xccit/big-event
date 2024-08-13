@@ -4,6 +4,9 @@ import { ref } from 'vue'
 import {register,login} from "@/api/user/user.js";
 import {useRouter} from 'vue-router'
 import {ElMessage} from "element-plus";
+import {useTokenStore} from "@/store/auth.js";
+
+const authStore = useTokenStore()
 
 //路由函数
 const router = useRouter()
@@ -44,9 +47,10 @@ const registerRules = {
 const submitRegister = () => {
   register(registerParams.value).then(response=>{
     //跳转到登录
+    ElMessage.success(response.message)
     isRegister.value = false
   }).catch(response=>{
-
+    ElMessage.error(response.message)
   })
 }
 
@@ -54,10 +58,12 @@ const submitRegister = () => {
 const submitLogin = ()=>{
   login(registerParams.value)
       .then(response=>{
+        authStore.setToken(response.data)
+        ElMessage.success("登录成功")
         router.push('/main')
       })
       .catch(response=>{
-
+        ElMessage.error(response.message)
       })
 }
 //清空数据模型

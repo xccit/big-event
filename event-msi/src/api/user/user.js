@@ -16,3 +16,10 @@ export const login = (params)=>{
         params: params
     })
 }
+
+export const logout = ()=>{
+    return request({
+        method: "POST",
+        url: `${baseUrl}/logout`
+    })
+}
